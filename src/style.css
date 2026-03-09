@@ -1,0 +1,484 @@
+/* ── Reset & base ─────────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --bg: #070d1a;
+    --surface: #0d1626;
+    --surface2: #111e30;
+    --border: #1e2f45;
+    --border2: #243549;
+    --text: #e2e8f0;
+    --text-muted: #64748b;
+    --text-dim: #94a3b8;
+    --accent: #38bdf8;
+    --accent2: #818cf8;
+    --accent-glow: rgba(56, 189, 248, 0.18);
+    --danger: #f87171;
+    --sidebar-w: 320px;
+    --radius: 8px;
+    --radius-lg: 12px;
+    --font: "Inter", "Segoe UI", system-ui, sans-serif;
+    --font-mono: "JetBrains Mono", "Fira Code", "Cascadia Code", monospace;
+}
+
+html,
+body {
+    height: 100%;
+    overflow: hidden;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 14px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ── Layout ───────────────────────────────────────────────────────────────── */
+body {
+    display: flex;
+    flex-direction: row;
+}
+
+/* ── Sidebar ──────────────────────────────────────────────────────────────── */
+#sidebar {
+    width: var(--sidebar-w);
+    flex-shrink: 0;
+    height: 100vh;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border2) transparent;
+    z-index: 10;
+}
+
+#sidebar::-webkit-scrollbar {
+    width: 4px;
+}
+#sidebar::-webkit-scrollbar-track {
+    background: transparent;
+}
+#sidebar::-webkit-scrollbar-thumb {
+    background: var(--border2);
+    border-radius: 2px;
+}
+
+/* Header */
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 20px 20px 16px;
+    border-bottom: 1px solid var(--border);
+}
+
+.logo {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+}
+
+.sidebar-header h1 {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    color: var(--text);
+}
+
+.sidebar-header .accent {
+    color: var(--accent);
+}
+
+/* Input section */
+.input-section {
+    padding: 18px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.field-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-dim);
+}
+
+.badge {
+    background: var(--surface2);
+    border: 1px solid var(--border2);
+    color: var(--accent2);
+    font-size: 10px;
+    font-weight: 600;
+    padding: 1px 7px;
+    border-radius: 99px;
+    letter-spacing: 0.04em;
+}
+
+.textarea-wrap {
+    position: relative;
+    border-radius: var(--radius);
+    border: 1px solid var(--border2);
+    background: var(--bg);
+    transition: border-color 0.15s;
+}
+
+.textarea-wrap:focus-within {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-glow);
+}
+
+#diagram-input {
+    width: 100%;
+    min-height: 180px;
+    resize: vertical;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    line-height: 1.65;
+    padding: 12px 14px;
+    tab-size: 2;
+}
+
+#diagram-input::placeholder {
+    color: var(--text-muted);
+}
+
+/* Buttons */
+.actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: var(--radius);
+    border: none;
+    font-family: var(--font);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition:
+        background 0.15s,
+        box-shadow 0.15s,
+        opacity 0.15s;
+    white-space: nowrap;
+}
+
+.btn svg {
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+}
+
+.btn-primary {
+    background: var(--accent);
+    color: #0c1a2e;
+    flex: 1;
+}
+
+.btn-primary:hover {
+    background: #7dd3fc;
+    box-shadow: 0 0 16px rgba(56, 189, 248, 0.35);
+}
+
+.btn-primary:active {
+    opacity: 0.85;
+}
+
+.btn-ghost {
+    background: var(--surface2);
+    color: var(--text-dim);
+    border: 1px solid var(--border2);
+}
+
+.btn-ghost:hover {
+    background: var(--border);
+    color: var(--text);
+}
+
+.error-msg {
+    font-size: 12px;
+    color: var(--danger);
+    background: rgba(248, 113, 113, 0.08);
+    border: 1px solid rgba(248, 113, 113, 0.25);
+    border-radius: var(--radius);
+    padding: 8px 12px;
+    line-height: 1.5;
+}
+
+/* Controls section */
+.controls-section {
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    flex: 1;
+}
+
+.section-title {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+}
+
+.control-row {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    align-items: center;
+    gap: 10px;
+}
+
+.control-row label {
+    font-size: 13px;
+    color: var(--text-dim);
+}
+
+.control-row input[type="range"] {
+    width: 110px;
+    accent-color: var(--accent);
+    cursor: pointer;
+    height: 4px;
+}
+
+.range-val {
+    font-size: 12px;
+    font-family: var(--font-mono);
+    color: var(--accent);
+    min-width: 28px;
+    text-align: right;
+}
+
+/* Toggle switch */
+.toggle-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.toggle-row label {
+    font-size: 13px;
+    color: var(--text-dim);
+}
+
+.toggle {
+    position: relative;
+    width: 40px;
+    height: 22px;
+    border-radius: 99px;
+    background: var(--border2);
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s;
+    flex-shrink: 0;
+    padding: 0;
+}
+
+.toggle.active {
+    background: var(--accent);
+}
+
+.toggle .thumb {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #fff;
+    transition: transform 0.2s;
+    pointer-events: none;
+}
+
+.toggle.active .thumb {
+    transform: translateX(18px);
+}
+
+/* Sidebar footer */
+.sidebar-footer {
+    padding: 14px 20px;
+    border-top: 1px solid var(--border);
+    margin-top: auto;
+}
+
+.sidebar-footer p {
+    font-size: 11px;
+    color: var(--text-muted);
+    line-height: 1.7;
+}
+
+kbd {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    background: var(--surface2);
+    border: 1px solid var(--border2);
+    border-radius: 4px;
+    padding: 1px 5px;
+    color: var(--text-dim);
+}
+
+/* ── Canvas container ─────────────────────────────────────────────────────── */
+#canvas-container {
+    flex: 1;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+    background: var(--bg);
+}
+
+#three-canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+/* ── CSS2D Label layer ─────────────────────────────────────────────────────── */
+#label-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.node-label {
+    display: inline-block;
+    background: rgba(13, 22, 38, 0.82);
+    border: 1px solid var(--border2);
+    border-radius: 5px;
+    padding: 3px 8px;
+    font-family: var(--font);
+    font-size: 11.5px;
+    font-weight: 500;
+    color: var(--text);
+    white-space: nowrap;
+    pointer-events: none;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    user-select: none;
+    transform: translateY(14px);
+    transition: opacity 0.2s;
+}
+
+/* ── Tooltip ──────────────────────────────────────────────────────────────── */
+#tooltip {
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    background: rgba(13, 22, 38, 0.92);
+    border: 1px solid var(--border2);
+    border-radius: var(--radius);
+    padding: 8px 12px;
+    font-size: 12.5px;
+    color: var(--text);
+    max-width: 240px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    opacity: 0;
+    transition: opacity 0.12s;
+    z-index: 20;
+    line-height: 1.55;
+}
+
+#tooltip.visible {
+    opacity: 1;
+}
+
+#tooltip .tt-id {
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 2px;
+}
+
+#tooltip .tt-shape {
+    color: var(--text-muted);
+    font-size: 11px;
+}
+
+/* ── HUD ──────────────────────────────────────────────────────────────────── */
+#hud {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(13, 22, 38, 0.72);
+    border: 1px solid var(--border);
+    border-radius: 99px;
+    padding: 5px 14px;
+    font-size: 12px;
+    color: var(--text-muted);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+#hud span {
+    font-variant-numeric: tabular-nums;
+}
+#hud .sep {
+    color: var(--border2);
+}
+
+/* ── Empty state ──────────────────────────────────────────────────────────── */
+#empty-state {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    pointer-events: none;
+    z-index: 1;
+    transition: opacity 0.3s;
+}
+
+#empty-state svg {
+    width: 80px;
+    height: 80px;
+    opacity: 0.5;
+}
+
+#empty-state p {
+    font-size: 14px;
+    color: var(--text-muted);
+    text-align: center;
+}
+
+#empty-state strong {
+    color: var(--text-dim);
+}
+
+#empty-state.hidden {
+    opacity: 0;
+}

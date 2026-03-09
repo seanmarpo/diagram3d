@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Mermaid 3D</title>
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="stylesheet" href="/src/style.css" />
+    </head>
+    <body>
+        <!-- ── Sidebar ─────────────────────────────────────────────── -->
+        <aside id="sidebar">
+            <header class="sidebar-header">
+                <svg
+                    class="logo"
+                    viewBox="0 0 36 36"
+                    fill="none"
+                    aria-hidden="true"
+                >
+                    <rect
+                        x="1"
+                        y="1"
+                        width="34"
+                        height="34"
+                        rx="7"
+                        fill="#0f172a"
+                        stroke="#334155"
+                        stroke-width="1.5"
+                    />
+                    <path
+                        d="M8 28 L18 8 L28 28"
+                        stroke="#38bdf8"
+                        stroke-width="2.2"
+                        stroke-linejoin="round"
+                        fill="none"
+                    />
+                    <path
+                        d="M11.5 21 L24.5 21"
+                        stroke="#818cf8"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                    />
+                    <circle cx="18" cy="8" r="2" fill="#38bdf8" />
+                    <circle cx="8" cy="28" r="2" fill="#818cf8" />
+                    <circle cx="28" cy="28" r="2" fill="#818cf8" />
+                </svg>
+                <h1>Mermaid <span class="accent">3D</span></h1>
+            </header>
+
+            <section class="input-section">
+                <label for="diagram-input" class="field-label">
+                    Diagram source
+                    <span class="badge">Mermaid</span>
+                </label>
+                <div class="textarea-wrap">
+                    <textarea
+                        id="diagram-input"
+                        spellcheck="false"
+                        autocorrect="off"
+                        autocapitalize="off"
+                        placeholder="flowchart LR&#10;  A[Browser] --&gt; B[Server]&#10;  B --&gt; C[(Database)]&#10;  B --&gt; D[Cache]"
+                    ></textarea>
+                </div>
+
+                <div class="actions">
+                    <button id="btn-render" class="btn btn-primary">
+                        <svg
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                            aria-hidden="true"
+                        >
+                            <path
+                                d="M3 4a1 1 0 011-1h4a1 1 0 010 2H6.414l6.293 6.293a1 1 0 010 1.414L6.414 19H8a1 1 0 010 2H4a1 1 0 01-1-1v-4a1 1 0 012 0v1.586l5.293-5.293L4.707 7H4a1 1 0 01-1-1V4z"
+                            />
+                        </svg>
+                        Render 3D
+                    </button>
+                    <button id="btn-example" class="btn btn-ghost">
+                        Load example
+                    </button>
+                </div>
+
+                <p id="parse-error" class="error-msg" hidden></p>
+            </section>
+
+            <section class="controls-section">
+                <h2 class="section-title">Scene</h2>
+
+                <div class="control-row">
+                    <label for="ctrl-strength">Force strength</label>
+                    <input
+                        type="range"
+                        id="ctrl-strength"
+                        min="10"
+                        max="500"
+                        value="120"
+                        step="5"
+                    />
+                    <span class="range-val" id="val-strength">120</span>
+                </div>
+
+                <div class="control-row">
+                    <label for="ctrl-link-dist">Link distance</label>
+                    <input
+                        type="range"
+                        id="ctrl-link-dist"
+                        min="20"
+                        max="300"
+                        value="100"
+                        step="5"
+                    />
+                    <span class="range-val" id="val-link-dist">100</span>
+                </div>
+
+                <div class="control-row">
+                    <label for="ctrl-node-size">Node size</label>
+                    <input
+                        type="range"
+                        id="ctrl-node-size"
+                        min="2"
+                        max="20"
+                        value="7"
+                        step="0.5"
+                    />
+                    <span class="range-val" id="val-node-size">7</span>
+                </div>
+
+                <div class="control-row">
+                    <label for="ctrl-bloom">Glow intensity</label>
+                    <input
+                        type="range"
+                        id="ctrl-bloom"
+                        min="0"
+                        max="100"
+                        value="40"
+                        step="1"
+                    />
+                    <span class="range-val" id="val-bloom">40</span>
+                </div>
+
+                <div class="toggle-row">
+                    <label for="ctrl-labels">Show labels</label>
+                    <button
+                        id="ctrl-labels"
+                        class="toggle active"
+                        role="switch"
+                        aria-checked="true"
+                    >
+                        <span class="thumb"></span>
+                    </button>
+                </div>
+
+                <div class="toggle-row">
+                    <label for="ctrl-arrows">Show arrows</label>
+                    <button
+                        id="ctrl-arrows"
+                        class="toggle active"
+                        role="switch"
+                        aria-checked="true"
+                    >
+                        <span class="thumb"></span>
+                    </button>
+                </div>
+            </section>
+
+            <footer class="sidebar-footer">
+                <p>
+                    Use <kbd>left-drag</kbd> to orbit &middot;
+                    <kbd>scroll</kbd> to zoom &middot; <kbd>right-drag</kbd> to
+                    pan
+                </p>
+            </footer>
+        </aside>
+
+        <!-- ── 3-D canvas ──────────────────────────────────────────── -->
+        <main id="canvas-container">
+            <div id="empty-state">
+                <svg viewBox="0 0 80 80" fill="none" aria-hidden="true">
+                    <circle
+                        cx="40"
+                        cy="40"
+                        r="38"
+                        stroke="#334155"
+                        stroke-width="1.5"
+                        stroke-dasharray="4 4"
+                    />
+                    <circle cx="40" cy="22" r="5" fill="#38bdf8" opacity=".8" />
+                    <circle cx="22" cy="56" r="5" fill="#818cf8" opacity=".8" />
+                    <circle cx="58" cy="56" r="5" fill="#818cf8" opacity=".8" />
+                    <line
+                        x1="40"
+                        y1="27"
+                        x2="24"
+                        y2="52"
+                        stroke="#475569"
+                        stroke-width="1.5"
+                    />
+                    <line
+                        x1="40"
+                        y1="27"
+                        x2="56"
+                        y2="52"
+                        stroke="#475569"
+                        stroke-width="1.5"
+                    />
+                    <line
+                        x1="27"
+                        y1="56"
+                        x2="53"
+                        y2="56"
+                        stroke="#475569"
+                        stroke-width="1.5"
+                    />
+                </svg>
+                <p>
+                    Paste a Mermaid diagram and hit <strong>Render 3D</strong>
+                </p>
+            </div>
+
+            <canvas id="three-canvas"></canvas>
+
+            <!-- CSS2D label layer (managed by three.js CSS2DRenderer) -->
+            <div id="label-layer"></div>
+
+            <div id="tooltip"></div>
+
+            <div id="hud">
+                <span id="hud-nodes">0 nodes</span>
+                <span class="sep">/</span>
+                <span id="hud-edges">0 edges</span>
+            </div>
+        </main>
+
+        <script type="module" src="/src/main.js"></script>
+    </body>
+</html>
