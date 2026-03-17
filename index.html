@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Mermaid 3D</title>
+        <title>Diagram 3D</title>
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <link rel="stylesheet" href="/src/style.css" />
     </head>
@@ -44,13 +44,13 @@
                     <circle cx="8" cy="28" r="2" fill="#818cf8" />
                     <circle cx="28" cy="28" r="2" fill="#818cf8" />
                 </svg>
-                <h1>Mermaid <span class="accent">3D</span></h1>
+                <h1>Diagram <span class="accent">3D</span></h1>
             </header>
 
             <section class="input-section">
                 <label for="diagram-input" class="field-label">
                     Diagram source
-                    <span class="badge">Mermaid</span>
+                    <span class="badge">Mermaid / Excalidraw</span>
                 </label>
                 <div class="textarea-wrap">
                     <textarea
@@ -58,7 +58,7 @@
                         spellcheck="false"
                         autocorrect="off"
                         autocapitalize="off"
-                        placeholder="flowchart LR&#10;  A[Browser] --&gt; B[Server]&#10;  B --&gt; C[(Database)]&#10;  B --&gt; D[Cache]"
+                        placeholder="Mermaid:&#10;  flowchart LR&#10;    A[Browser] --&gt; B[Server]&#10;    B --&gt; C[(Database)]&#10;&#10;Excalidraw:&#10;  Paste the contents of an .excalidraw file (JSON)"
                     ></textarea>
                 </div>
 
@@ -78,6 +78,30 @@
                     <button id="btn-example" class="btn btn-ghost">
                         Load example
                     </button>
+                </div>
+                <div class="actions actions-share">
+                    <button
+                        id="btn-share"
+                        class="btn btn-ghost btn-share"
+                        title="Copy shareable link to clipboard"
+                    >
+                        <svg
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                            aria-hidden="true"
+                        >
+                            <path
+                                d="M15 8a3 3 0 10-2.977-2.63l-4.94 2.47a3 3 0 100 4.319l4.94 2.47a3 3 0 10.895-1.789l-4.94-2.47a3.027 3.027 0 000-.74l4.94-2.47C13.456 7.68 14.19 8 15 8z"
+                            />
+                        </svg>
+                        Share link
+                    </button>
+                    <span
+                        id="share-feedback"
+                        class="share-feedback"
+                        aria-live="polite"
+                        hidden
+                    ></span>
                 </div>
 
                 <p id="parse-error" class="error-msg" hidden></p>
@@ -213,7 +237,8 @@
                     />
                 </svg>
                 <p>
-                    Paste a Mermaid diagram and hit <strong>Render 3D</strong>
+                    Paste a Mermaid or Excalidraw diagram and hit
+                    <strong>Render 3D</strong>
                 </p>
             </div>
 
@@ -228,6 +253,8 @@
                 <span id="hud-nodes">0 nodes</span>
                 <span class="sep">/</span>
                 <span id="hud-edges">0 edges</span>
+                <span class="sep">/</span>
+                <span id="hud-format" data-format="">–</span>
             </div>
         </main>
 

@@ -1,13 +1,14 @@
 /**
  * examples.js
  *
- * A rotating set of example Mermaid flowchart diagrams used by the
- * "Load example" button.  Each entry has a name and a src string.
+ * A rotating set of example diagrams used by the "Load example" button.
+ * Each entry has a name, a format ('mermaid' | 'excalidraw'), and a src string.
  */
 
 export const EXAMPLES = [
   {
-    name: 'Web architecture',
+    name: "Web architecture",
+    format: "mermaid",
     src: `flowchart LR
   Browser[Browser] --> LB[Load Balancer]
   LB --> API1[API Server 1]
@@ -24,7 +25,8 @@ export const EXAMPLES = [
   Worker2 --> Storage`,
   },
   {
-    name: 'CI/CD pipeline',
+    name: "CI/CD pipeline",
+    format: "mermaid",
     src: `flowchart TD
   Push[Git Push] --> CI{CI Checks}
   CI -->|pass| Build[Build & Bundle]
@@ -41,7 +43,8 @@ export const EXAMPLES = [
   Approval -->|rejected| Notify`,
   },
   {
-    name: 'Auth flow',
+    name: "Auth flow",
+    format: "mermaid",
     src: `flowchart TD
   Start((Start)) --> Login[Login Request]
   Login --> Valid{Credentials Valid?}
@@ -57,7 +60,8 @@ export const EXAMPLES = [
   Fail --> Done`,
   },
   {
-    name: 'Microservices',
+    name: "Microservices",
+    format: "mermaid",
     src: `flowchart LR
   Gateway[API Gateway] --> Auth[Auth Service]
   Gateway --> Users[User Service]
@@ -75,7 +79,8 @@ export const EXAMPLES = [
   Inventory --> InvDB[(Inventory DB)]`,
   },
   {
-    name: 'Data pipeline',
+    name: "Data pipeline",
+    format: "mermaid",
     src: `flowchart LR
   Ingest[Data Ingest] --> Validate{Schema Valid?}
   Validate -->|yes| Clean[Clean & Normalise]
@@ -89,6 +94,275 @@ export const EXAMPLES = [
   ML --> Train[Model Training]
   Train --> Registry[(Model Registry)]
   Registry --> Serve[Model Serving]`,
+  },
+  // ── Excalidraw examples ────────────────────────────────────────────────
+  {
+    name: "Excalidraw: Request flow",
+    format: "excalidraw",
+    src: JSON.stringify(
+      {
+        type: "excalidraw",
+        version: 2,
+        elements: [
+          {
+            id: "client",
+            type: "rectangle",
+            x: 0,
+            y: 0,
+            width: 120,
+            height: 60,
+            strokeStyle: "solid",
+            label: { text: "Client" },
+          },
+          {
+            id: "gateway",
+            type: "rectangle",
+            x: 200,
+            y: 0,
+            width: 120,
+            height: 60,
+            strokeStyle: "solid",
+            label: { text: "API Gateway" },
+          },
+          {
+            id: "auth",
+            type: "rectangle",
+            x: 400,
+            y: -80,
+            width: 120,
+            height: 60,
+            strokeStyle: "solid",
+            label: { text: "Auth Service" },
+          },
+          {
+            id: "api",
+            type: "rectangle",
+            x: 400,
+            y: 80,
+            width: 120,
+            height: 60,
+            strokeStyle: "solid",
+            label: { text: "API Service" },
+          },
+          {
+            id: "db",
+            type: "ellipse",
+            x: 600,
+            y: 80,
+            width: 120,
+            height: 60,
+            strokeStyle: "solid",
+            label: { text: "Database" },
+          },
+          {
+            id: "cache",
+            type: "diamond",
+            x: 600,
+            y: -80,
+            width: 120,
+            height: 60,
+            strokeStyle: "solid",
+            label: { text: "Cache" },
+          },
+          {
+            id: "e1",
+            type: "arrow",
+            startBinding: { elementId: "client" },
+            endBinding: { elementId: "gateway" },
+            strokeStyle: "solid",
+            label: { text: "HTTP" },
+          },
+          {
+            id: "e2",
+            type: "arrow",
+            startBinding: { elementId: "gateway" },
+            endBinding: { elementId: "auth" },
+            strokeStyle: "dashed",
+            label: { text: "verify" },
+          },
+          {
+            id: "e3",
+            type: "arrow",
+            startBinding: { elementId: "gateway" },
+            endBinding: { elementId: "api" },
+            strokeStyle: "solid",
+            label: { text: "proxy" },
+          },
+          {
+            id: "e4",
+            type: "arrow",
+            startBinding: { elementId: "api" },
+            endBinding: { elementId: "cache" },
+            strokeStyle: "dashed",
+            label: { text: "lookup" },
+          },
+          {
+            id: "e5",
+            type: "arrow",
+            startBinding: { elementId: "api" },
+            endBinding: { elementId: "db" },
+            strokeStyle: "solid",
+            label: { text: "query" },
+          },
+        ],
+      },
+      null,
+      2,
+    ),
+  },
+  {
+    name: "Excalidraw: CI pipeline",
+    format: "excalidraw",
+    src: JSON.stringify(
+      {
+        type: "excalidraw",
+        version: 2,
+        elements: [
+          {
+            id: "push",
+            type: "rectangle",
+            x: 0,
+            y: 0,
+            width: 120,
+            height: 60,
+            strokeStyle: "solid",
+            label: { text: "Git Push" },
+          },
+          {
+            id: "lint",
+            type: "rectangle",
+            x: 200,
+            y: -80,
+            width: 120,
+            height: 60,
+            strokeStyle: "solid",
+            label: { text: "Lint" },
+          },
+          {
+            id: "test",
+            type: "rectangle",
+            x: 200,
+            y: 80,
+            width: 120,
+            height: 60,
+            strokeStyle: "solid",
+            label: { text: "Tests" },
+          },
+          {
+            id: "build",
+            type: "rectangle",
+            x: 400,
+            y: 0,
+            width: 120,
+            height: 60,
+            strokeStyle: "solid",
+            label: { text: "Build" },
+          },
+          {
+            id: "image",
+            type: "rectangle",
+            x: 600,
+            y: 0,
+            width: 120,
+            height: 60,
+            strokeStyle: "solid",
+            label: { text: "Docker Image" },
+          },
+          {
+            id: "staging",
+            type: "ellipse",
+            x: 800,
+            y: -80,
+            width: 120,
+            height: 60,
+            strokeStyle: "solid",
+            label: { text: "Staging" },
+          },
+          {
+            id: "prod",
+            type: "ellipse",
+            x: 800,
+            y: 80,
+            width: 120,
+            height: 60,
+            strokeStyle: "solid",
+            label: { text: "Production" },
+          },
+          {
+            id: "notify",
+            type: "diamond",
+            x: 400,
+            y: 160,
+            width: 120,
+            height: 60,
+            strokeStyle: "solid",
+            label: { text: "Notify" },
+          },
+          {
+            id: "e1",
+            type: "arrow",
+            startBinding: { elementId: "push" },
+            endBinding: { elementId: "lint" },
+            strokeStyle: "solid",
+          },
+          {
+            id: "e2",
+            type: "arrow",
+            startBinding: { elementId: "push" },
+            endBinding: { elementId: "test" },
+            strokeStyle: "solid",
+          },
+          {
+            id: "e3",
+            type: "arrow",
+            startBinding: { elementId: "lint" },
+            endBinding: { elementId: "build" },
+            strokeStyle: "solid",
+            label: { text: "pass" },
+          },
+          {
+            id: "e4",
+            type: "arrow",
+            startBinding: { elementId: "test" },
+            endBinding: { elementId: "build" },
+            strokeStyle: "solid",
+            label: { text: "pass" },
+          },
+          {
+            id: "e5",
+            type: "arrow",
+            startBinding: { elementId: "test" },
+            endBinding: { elementId: "notify" },
+            strokeStyle: "dashed",
+            label: { text: "fail" },
+          },
+          {
+            id: "e6",
+            type: "arrow",
+            startBinding: { elementId: "build" },
+            endBinding: { elementId: "image" },
+            strokeStyle: "solid",
+          },
+          {
+            id: "e7",
+            type: "arrow",
+            startBinding: { elementId: "image" },
+            endBinding: { elementId: "staging" },
+            strokeStyle: "solid",
+          },
+          {
+            id: "e8",
+            type: "arrow",
+            startBinding: { elementId: "staging" },
+            endBinding: { elementId: "prod" },
+            strokeStyle: "solid",
+            label: { text: "approve" },
+          },
+        ],
+      },
+      null,
+      2,
+    ),
   },
 ];
 

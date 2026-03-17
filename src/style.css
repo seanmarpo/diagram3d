@@ -218,6 +218,55 @@ body {
     color: var(--text);
 }
 
+.btn-share {
+    flex: 1;
+}
+
+.btn-share.copied {
+    background: rgba(52, 211, 153, 0.15);
+    border-color: rgba(52, 211, 153, 0.45);
+    color: #34d399;
+}
+
+.actions-share {
+    margin-top: -2px;
+}
+
+.share-feedback {
+    font-size: 12px;
+    color: #34d399;
+    display: none;
+    align-items: center;
+    gap: 5px;
+    animation: fade-in-up 0.2s ease;
+    flex-shrink: 0;
+}
+
+.share-feedback:not([hidden]) {
+    display: flex;
+}
+
+.share-feedback::before {
+    content: "";
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #34d399;
+    flex-shrink: 0;
+}
+
+@keyframes fade-in-up {
+    from {
+        opacity: 0;
+        transform: translateY(4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 .error-msg {
     font-size: 12px;
     color: var(--danger);
@@ -447,6 +496,17 @@ kbd {
 }
 #hud .sep {
     color: var(--border2);
+}
+
+#hud-format {
+    font-weight: 600;
+    color: var(--text-muted);
+}
+#hud-format[data-format="mermaid"] {
+    color: var(--accent);
+}
+#hud-format[data-format="excalidraw"] {
+    color: var(--accent2);
 }
 
 /* ── Empty state ──────────────────────────────────────────────────────────── */
