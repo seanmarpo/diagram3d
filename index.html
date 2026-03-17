@@ -17,6 +17,7 @@
                     fill="none"
                     aria-hidden="true"
                 >
+                    <!-- background tile -->
                     <rect
                         x="1"
                         y="1"
@@ -27,22 +28,87 @@
                         stroke="#334155"
                         stroke-width="1.5"
                     />
-                    <path
-                        d="M8 28 L18 8 L28 28"
+
+                    <!--
+                        "D" letterform as a graph.
+                        Nodes (anchor points of the letter):
+                          TL = (9,  7)   top-left    (top of spine)
+                          BL = (9, 29)   bottom-left (bottom of spine)
+                          TR = (16, 7)   top-right   (top of bump)
+                          MR = (27,18)   mid-right   (apex of bump)
+                          BR = (16,29)   bottom-right(bottom of bump)
+
+                        Edges trace the D shape:
+                          spine:      TL → BL  (solid, cyan)
+                          top bar:    TL → TR  (solid, cyan)
+                          bottom bar: BL → BR  (solid, cyan)
+                          curve top:  TR → MR  (dashed, indigo)
+                          curve bot:  MR → BR  (dashed, indigo)
+                    -->
+
+                    <!-- spine: TL → BL -->
+                    <line
+                        x1="9"
+                        y1="7"
+                        x2="9"
+                        y2="29"
                         stroke="#38bdf8"
-                        stroke-width="2.2"
-                        stroke-linejoin="round"
-                        fill="none"
+                        stroke-width="2"
+                        stroke-linecap="round"
                     />
-                    <path
-                        d="M11.5 21 L24.5 21"
+
+                    <!-- top bar: TL → TR -->
+                    <line
+                        x1="9"
+                        y1="7"
+                        x2="16"
+                        y2="7"
+                        stroke="#38bdf8"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                    />
+
+                    <!-- bottom bar: BL → BR -->
+                    <line
+                        x1="9"
+                        y1="29"
+                        x2="16"
+                        y2="29"
+                        stroke="#38bdf8"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                    />
+
+                    <!-- curve top: TR → MR (dashed) -->
+                    <line
+                        x1="16"
+                        y1="7"
+                        x2="27"
+                        y2="18"
                         stroke="#818cf8"
                         stroke-width="1.8"
                         stroke-linecap="round"
+                        stroke-dasharray="2.5 2.5"
                     />
-                    <circle cx="18" cy="8" r="2" fill="#38bdf8" />
-                    <circle cx="8" cy="28" r="2" fill="#818cf8" />
-                    <circle cx="28" cy="28" r="2" fill="#818cf8" />
+
+                    <!-- curve bot: MR → BR (dashed) -->
+                    <line
+                        x1="27"
+                        y1="18"
+                        x2="16"
+                        y2="29"
+                        stroke="#818cf8"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-dasharray="2.5 2.5"
+                    />
+
+                    <!-- nodes -->
+                    <circle cx="9" cy="7" r="2.2" fill="#38bdf8" />
+                    <circle cx="9" cy="29" r="2.2" fill="#38bdf8" />
+                    <circle cx="16" cy="7" r="2" fill="#818cf8" />
+                    <circle cx="27" cy="18" r="2.4" fill="#38bdf8" />
+                    <circle cx="16" cy="29" r="2" fill="#818cf8" />
                 </svg>
                 <h1>Diagram <span class="accent">3D</span></h1>
             </header>
